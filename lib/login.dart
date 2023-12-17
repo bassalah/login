@@ -1,7 +1,11 @@
 
-import 'package:flutter/material.dart';
-import 'package:login/second.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'fstscreen.dart';
 class login extends StatefulWidget {
   const login({super.key});
 
@@ -12,8 +16,37 @@ class login extends StatefulWidget {
 class _loginState extends State<login> {
  late String email;
  late String password;
-  TextEditingController data=TextEditingController();
-  @override
+  TextEditingController ema =TextEditingController();
+ TextEditingController pass=TextEditingController();
+
+
+ void initState() {
+   super.initState();
+
+   isLogin();
+ }
+
+ void isLogin()async {
+   SharedPreferences sp = await SharedPreferences.getInstance();
+   bool? isLogin = sp.getBool('isLogin') ?? false;
+
+   if(isLogin){
+     Timer(const Duration(seconds: 5), () {
+       Navigator.push(
+           context, MaterialPageRoute(builder: (context) => fstScreen(ema,pass)));
+     });
+
+   }else{
+     Timer(const Duration(seconds: 5), () {
+       Navigator.push(
+           context, MaterialPageRoute(builder: (context) => login()));
+     });
+
+   }
+ }
+
+
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
           body: Column(
@@ -22,7 +55,7 @@ class _loginState extends State<login> {
             Text("login",style: TextStyle(fontSize:30,fontWeight:FontWeight.bold,)),
       SizedBox(height: 20),
             TextFormField(
-              controller: data,
+              controller: ema,
               keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: "enter your email",
@@ -34,6 +67,7 @@ class _loginState extends State<login> {
 
             SizedBox(height: 20),
              TextFormField(
+               controller: pass,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -48,9 +82,17 @@ class _loginState extends State<login> {
             Container(  
               child: MaterialButton(
                 color: Colors.white,
-                onPressed: (){
-                 Navigator.push(context, MaterialPageRoute(builder:(builder)=>sec(data)));
-                },
+                onPressed: () async {
+
+
+               SharedPreferences pref = await SharedPreferences.getInstance();
+                pref.remove("email");
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
+                   return fstScreen(ema, pass);
+                }));
+    },
+                // Navigator.push(context, MaterialPageRoute(builder:(builder)=>sec(data)));
+             //   },
               child: Text("login",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 20),),),
             ),
 
@@ -60,8 +102,19 @@ class _loginState extends State<login> {
 
              }, child: Text("sign up"))
 
-      ],)
+      ],),
 
+          ElevatedButton(
+
+           onPressed: () async {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.remove("email");
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
+            return login();
+          }));
+        },
+        child: Text("Logout",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+      ),
 ])
 
 

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-class sec extends StatelessWidget {
-  const sec (TextEditingController data, {super.key});
+class fstScreen extends StatelessWidget {
+  const fstScreen (TextEditingController ema,TextEditingController pass, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class sec extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("welcome to  food app"),
+            Text("welcome to splash food app"),
             Text("any receipe you want"),
           ],
         ),

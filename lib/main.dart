@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:login/fstscreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login.dart';
-void main(){
-  runApp(login());
+
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs =await SharedPreferences.getInstance();
+  var email=prefs.getString("email");
+  print(email);
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: email==null?sec(email):login(),));
 }
+
+
 class myApp extends StatelessWidget {
   const myApp({super.key});
 

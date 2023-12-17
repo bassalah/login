@@ -11,11 +11,12 @@ class signUp extends StatefulWidget {
 }
 
 class _signUpState extends State<signUp> {
-  late String email;
+ late  String email;
 
-  late String password;
+late  String password;
 
-  TextEditingController sdata=TextEditingController();
+  TextEditingController signEmail=TextEditingController();
+ TextEditingController signPassword=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class _signUpState extends State<signUp> {
               Text("sign up",style: TextStyle(fontSize:30,fontWeight:FontWeight.bold,)),
               SizedBox(height: 20),
               TextFormField(
-                controller: sdata,
+                controller: signEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: "enter your email",
@@ -57,6 +58,7 @@ class _signUpState extends State<signUp> {
 
               SizedBox(height: 20),
               TextFormField(
+                controller: signPassword,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 decoration: InputDecoration(
